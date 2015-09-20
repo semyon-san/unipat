@@ -178,19 +178,19 @@ if __name__ == '__main__':
             display_result(result, raw_data=True)
         elif args['pattern']:
             result = pattern(args['pattern'])
-            display_result(result, raw_data=True)
+            display_result(result)
         elif args['offset']:
             if not args['e']:
                 print('[-] Need option "-e" for "--offset"')
                 sys.exit(1)
             result = pattern_offset(args['offset'], args['e'])
-            dispaly_result(result)
+            display_result(result)
         elif args['lendian']:
             result = lendian(raw_hex(args['lendian']))
-            dispaly_result(result, raw_data=True)
+            display_result(result, raw_data=True)
         elif args['toint']:
             result = toint(args['toint'])
-            dispaly_result(result)
+            display_result(result)
         else:
             print('Use "-h" or "--help" to see available options')
             sys.exit(1)
