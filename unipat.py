@@ -148,7 +148,7 @@ def parse_args(argv):
 
     badchars = parser.add_argument_group('For --badchars')
     badchars.add_argument('-b', type=check_hex_string, default='', metavar='BADCHARS', help='Exclude badchars. Example: "\\xff\\xcc\\x0b\\x00"')
-    badchars.add_argument('-s', type=check_hex_string, default='\\x01', metavar='CHAR', help='Character to start from. Example "\\x00"')
+    badchars.add_argument('-s', type=check_hex_string, default='\\x01', metavar='CHAR', help='Character to start from. Example: "\\x00"')
 
     offset = parser.add_argument_group('For --offset')
     offset.add_argument('-e', type=check_hex, metavar='ADDRESS', help='Find offset at this address (use with --offset <num>)')

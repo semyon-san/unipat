@@ -22,7 +22,7 @@ Functions:
 
 For --badchars:
   -b BADCHARS        Exclude badchars. Example: "\xff\xcc\x0b\x00"
-  -s CHAR            Character to start from. Example "\x00"
+  -s CHAR            Character to start from. Example: "\x00"
 
 For --offset:
   -e ADDRESS         Find offset at this address (use with --offset <num>)
