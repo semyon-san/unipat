@@ -35,6 +35,9 @@ import struct
 import sys
 import re
 
+from signal import signal, SIGPIPE, SIG_DFL
+signal(SIGPIPE, SIG_DFL)
+
 __author__  = 's3my0n'
 __version__ = 1.9
 
@@ -159,46 +162,40 @@ def parse_args(argv):
 
 ##### ARGUMENT PARSING STUFF END #####
 
+def display_result(result, raw_data=False):
+    if args['r']:
+        print_raw(result) if raw_data else print(result, end='')
+    else:
+        print(hex_escape(result)) if raw_data else print(result)
+
 if __name__ == '__main__':
     args = parse_args(sys.argv[1:])
 
+    result = None
     try:
         if args['badchars']:
             result = badchars(args['badchars'], start=raw_hex_string(args['s']), bad=raw_hex_string(args['b']))
-            if args['r']:
-                print_raw(result)
-            else:
-                print(hex_escape(result))
+            display_result(result, raw_data=True)
         elif args['pattern']:
             result = pattern(args['pattern'])
-            if args['r']:
-                print(result, end='')
-            else:
-                print(result)
+            display_result(result, raw_data=True)
         elif args['offset']:
             if not args['e']:
                 print('[-] Need option "-e" for "--offset"')
                 sys.exit(1)
             result = pattern_offset(args['offset'], args['e'])
-            if args['r']:
-                print(result, end='')
-            else:
-                print(result)
+            dispaly_result(result)
         elif args['lendian']:
             result = lendian(raw_hex(args['lendian']))
-            if args['r']:
-                print_raw(result)
-            else:
-                print(hex_escape(result))
+            dispaly_result(result, raw_data=True)
         elif args['toint']:
             result = toint(args['toint'])
-            if args['r']:
-                print(result, end='')
-            else:
-                print(result)
+            dispaly_result(result)
         else:
             print('Use "-h" or "--help" to see available options')
-
+            sys.exit(1)
     except ValueError as e:
         print('[!] Error: {}'.format(e))
         sys.exit(1)
+    except BrokenPipeError:
+        sys.exit(2)
